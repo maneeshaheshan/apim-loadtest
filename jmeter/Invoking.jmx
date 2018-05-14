@@ -15,7 +15,7 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="host" elementType="Argument">
             <stringProp name="Argument.name">host</stringProp>
-            <stringProp name="Argument.value">localhost</stringProp>
+            <stringProp name="Argument.value">172.17.0.1</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="amPort" elementType="Argument">
@@ -26,6 +26,11 @@
           <elementProp name="apiPort" elementType="Argument">
             <stringProp name="Argument.name">apiPort</stringProp>
             <stringProp name="Argument.value">9001</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="nioPort" elementType="Argument">
+            <stringProp name="Argument.name">nioPort</stringProp>
+            <stringProp name="Argument.value">8243</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -117,19 +122,6 @@
             <stringProp name="HTTPSampler.response_timeout"></stringProp>
           </HTTPSamplerProxy>
           <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-              <collectionProp name="HeaderManager.headers">
-                <elementProp name="" elementType="Header">
-                  <stringProp name="Header.name">Authorization</stringProp>
-                  <stringProp name="Header.value">Basic ${encryptedUserCredentials}</stringProp>
-                </elementProp>
-                <elementProp name="" elementType="Header">
-                  <stringProp name="Header.name">Content-Type</stringProp>
-                  <stringProp name="Header.value">application/json</stringProp>
-                </elementProp>
-              </collectionProp>
-            </HeaderManager>
-            <hashTree/>
             <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
               <stringProp name="cacheKey"></stringProp>
               <stringProp name="filename"></stringProp>
@@ -144,6 +136,19 @@ byte[] b64encrypted = Base64.encodeBase64(concatValue.getBytes());
       vars.put(&quot;encryptedUserCredentials&quot;,new String(b64encrypted));</stringProp>
               <stringProp name="scriptLanguage">groovy</stringProp>
             </JSR223PreProcessor>
+            <hashTree/>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Authorization</stringProp>
+                  <stringProp name="Header.value">Basic ${encryptedUserCredentials}</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
             <hashTree/>
             <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
               <stringProp name="JSONPostProcessor.referenceNames">clientId;clientSecret</stringProp>
@@ -174,7 +179,7 @@ byte[] b64encrypted = Base64.encodeBase64(concatValue.getBytes());
               </collectionProp>
             </elementProp>
             <stringProp name="HTTPSampler.domain">${host}</stringProp>
-            <stringProp name="HTTPSampler.port">${apiPort}</stringProp>
+            <stringProp name="HTTPSampler.port">${nioPort}</stringProp>
             <stringProp name="HTTPSampler.protocol">https</stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
             <stringProp name="HTTPSampler.path">/token</stringProp>
@@ -205,9 +210,9 @@ byte[] b64encrypted = Base64.encodeBase64(concatValue.getBytes());
 
 String clientId = vars.get(&quot;clientId&quot;);
 String clientSecret = vars.get(&quot;clientSecret&quot;);
-String concatValue = clientId + &quot;:&quot; + clientSecret;
+String concatValue1 = clientId + &quot;:&quot; + clientSecret;
 
-byte[] b64encrypted = Base64.encodeBase64(concatValue.getBytes());
+byte[] b64encrypted = Base64.encodeBase64(concatValue1.getBytes());
       vars.put(&quot;b64encryptedValue&quot;,new String(b64encrypted));</stringProp>
               <stringProp name="scriptLanguage">groovy</stringProp>
             </JSR223PreProcessor>
@@ -387,7 +392,7 @@ vars.put(&quot;throttlingTier&quot;, tier);</stringProp>
               <hashTree/>
               <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
                 <stringProp name="JSONPostProcessor.referenceNames">apiId</stringProp>
-                <stringProp name="JSONPostProcessor.jsonPathExprs">$.list[?(@.name == &apos;WikiAPI2&apos;)].id</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">$.list[?(@.name == &apos;WikiAPI3&apos;)].id</stringProp>
                 <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
                 <stringProp name="JSONPostProcessor.defaultValues">NOTFOUND</stringProp>
               </JSONPostProcessor>
@@ -625,12 +630,6 @@ ${__setProperty(forthAccessToken, ${accessToken4})};</stringProp>
               </BeanShellAssertion>
               <hashTree/>
             </hashTree>
-            <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="true">
-              <boolProp name="displayJMeterProperties">false</boolProp>
-              <boolProp name="displayJMeterVariables">true</boolProp>
-              <boolProp name="displaySystemProperties">false</boolProp>
-            </DebugSampler>
-            <hashTree/>
           </hashTree>
         </hashTree>
       </hashTree>
@@ -654,16 +653,40 @@ ${__setProperty(forthAccessToken, ${accessToken4})};</stringProp>
           <stringProp name="TestPlan.comments">Invoke from Apps by order - TomsApp4</stringProp>
         </GenericController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invokeAPs" enabled="true">
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+            <stringProp name="cacheKey"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="script">import org.apache.commons.codec.binary.Base64;
+
+String consumerKey = vars.get(&quot;consumerKey&quot;);
+String consumerSecret = vars.get(&quot;consumerSecret&quot;);
+String concatValue = consumerKey + &quot;:&quot; + consumerSecret;
+
+byte[] b64encrypted1 = Base64.encodeBase64(concatValue.getBytes());
+      vars.put(&quot;b641encryptedValue&quot;,new String(b64encrypted1));</stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+          </JSR223PreProcessor>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invokeAPIs" enabled="true">
+            <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
+              <collectionProp name="HTTPFileArgs.files">
+                <elementProp name="/home/maneesha/dasproject/mayrepo/1/apim-loadtest/resources/medium_payload.txt" elementType="HTTPFileArg">
+                  <stringProp name="File.path">/home/maneesha/dasproject/mayrepo/1/apim-loadtest/resources/medium_payload.txt</stringProp>
+                  <stringProp name="File.paramname"></stringProp>
+                  <stringProp name="File.mimetype"></stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
             <stringProp name="HTTPSampler.domain">${host}</stringProp>
-            <stringProp name="HTTPSampler.port">${apiPort}</stringProp>
+            <stringProp name="HTTPSampler.port">${nioPort}</stringProp>
             <stringProp name="HTTPSampler.protocol">https</stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/testapijm1/1.0.0/menu</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <stringProp name="HTTPSampler.path">/wikiapi3/1.0.0/addInfo</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
             <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -682,7 +705,7 @@ ${__setProperty(forthAccessToken, ${accessToken4})};</stringProp>
                 </elementProp>
                 <elementProp name="" elementType="Header">
                   <stringProp name="Header.name">Authorization</stringProp>
-                  <stringProp name="Header.value">Bearer ${ConsumerAccessToken}</stringProp>
+                  <stringProp name="Header.value">Bearer ${b641encryptedValue}</stringProp>
                 </elementProp>
               </collectionProp>
             </HeaderManager>
@@ -716,7 +739,7 @@ ${__setProperty(forthAccessToken, ${accessToken4})};</stringProp>
       <hashTree>
         <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="RemoveApplications" enabled="true">
           <boolProp name="LoopController.continue_forever">true</boolProp>
-          <stringProp name="LoopController.loops">4</stringProp>
+          <stringProp name="LoopController.loops">1</stringProp>
         </LoopController>
         <hashTree>
           <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="Counter" enabled="true">
