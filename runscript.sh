@@ -20,19 +20,21 @@
 #run high-traffic-jmeter_script
 
 crontab -l > mycron
-sudo echo "0 8 * * * /home/maneesha/dasproject/Scripts/high_traffic_Invocation.sh" >> mycron
+sudo echo "15 8 * * * /home/maneesha/dasproject/Scripts/high_traffic_Invocation.sh" >> mycron
 crontab mycron
 rm mycron
 
 #run medium-traffic-jmeter_script
 crontab -l > mycron
-sudo echo "0 18 * * * /home/maneesha/dasproject/Scripts/medium_traffic_Invocation.sh" >> mycron
+sudo echo "15 8 * * * /home/maneesha/dasproject/Scripts/medium_traffic_Invocation.sh" >> mycron
 crontab mycron
 rm mycron
 
 #run low-traffic-jmeter_script
 crontab -l > mycron
-sudo echo "0 00 * * * /home/maneesha/dasproject/Scripts/low_traffic_Invocation.sh" >> mycron
+sudo echo "15 8 * * * /home/maneesha/dasproject/Scripts/low_traffic_Invocation.sh" >> mycron
 crontab mycron
 rm mycron
+
+
 
