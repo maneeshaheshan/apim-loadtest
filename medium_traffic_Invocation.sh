@@ -1,2 +1,0 @@
-# {JMETER_HOME}/bin/jmeter -n -t {Path_To_Scrpting_HOME}/jmeter/medium_traffic_Invocation.jmx -p {Path_To_Scrpting_HOME}/resources/medium-traffic-user.properties -l {Path_To_Scrpting_HOME}/das-LRTest-MediumTraffic.jtl
-/home/maneesha/Downloads/apache-jmeter-3.2/bin/jmeter -n -t /home/maneesha/dasproject/mayrepo/1/apim-loadtest/jmeter/medium_traffic_Invocation.jmx -p /home/maneesha/dasproject/mayrepo/1/apim-loadtest/resources/medium-traffic-user.properties -l /home/maneesha/dasproject/mayrepo/1/apim-loadtest/jmeter/das-LRTest-MediumTraffic.jtl

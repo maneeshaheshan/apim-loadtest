@@ -22,111 +22,72 @@
         <stringProp name="CookieManager.implementation">org.apache.jmeter.protocol.http.control.HC4CookieHandler</stringProp>
       </CookieManager>
       <hashTree/>
-      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments">
           <elementProp name="owner" elementType="Argument">
             <stringProp name="Argument.name">owner</stringProp>
-            <stringProp name="Argument.value">admin</stringProp>
+            <stringProp name="Argument.value">${__property(owner)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="authorization" elementType="Argument">
             <stringProp name="Argument.name">authorization</stringProp>
-            <stringProp name="Argument.value">YWRtaW46YWRtaW4=</stringProp>
+            <stringProp name="Argument.value">${__property(authorization)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="clientName" elementType="Argument">
             <stringProp name="Argument.name">clientName</stringProp>
-            <stringProp name="Argument.value">rest_api_publisher</stringProp>
+            <stringProp name="Argument.value">${__property(clientName)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="username" elementType="Argument">
             <stringProp name="Argument.name">username</stringProp>
-            <stringProp name="Argument.value">admin</stringProp>
+            <stringProp name="Argument.value">${__property(username)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="password" elementType="Argument">
             <stringProp name="Argument.name">password</stringProp>
-            <stringProp name="Argument.value">admin</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="host" elementType="Argument">
-            <stringProp name="Argument.name">host</stringProp>
-            <stringProp name="Argument.value">localhost</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="port" elementType="Argument">
-            <stringProp name="Argument.name">port</stringProp>
-            <stringProp name="Argument.value">9443</stringProp>
+            <stringProp name="Argument.value">${__property(password)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="APIName" elementType="Argument">
             <stringProp name="Argument.name">APIName</stringProp>
-            <stringProp name="Argument.value">WikiAPI</stringProp>
+            <stringProp name="Argument.value">${__property(APIName)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="APIContext" elementType="Argument">
             <stringProp name="Argument.name">APIContext</stringProp>
-            <stringProp name="Argument.value">wikiapi</stringProp>
+            <stringProp name="Argument.value">${__property(APIContext)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="APIVersion" elementType="Argument">
             <stringProp name="Argument.name">APIVersion</stringProp>
-            <stringProp name="Argument.value">1.0.0</stringProp>
+            <stringProp name="Argument.value">${__property(APIVersion)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="UUID" elementType="Argument">
             <stringProp name="Argument.name">UUID</stringProp>
-            <stringProp name="Argument.value">8c22edc-f6cc-11e7-8c3f-9a214cf093ae</stringProp>
+            <stringProp name="Argument.value">${__property(UUID)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
       </Arguments>
-      <hashTree/>
+
+	<hashTree/>
       <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="Variables HostsNPorts" enabled="true">
         <collectionProp name="Arguments.arguments">
-          <elementProp name="pubHost" elementType="Argument">
-            <stringProp name="Argument.name">pubHost</stringProp>
-            <stringProp name="Argument.value">localhost</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="pubPort" elementType="Argument">
-            <stringProp name="Argument.name">pubPort</stringProp>
-            <stringProp name="Argument.value">9443</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="storeHost" elementType="Argument">
-            <stringProp name="Argument.name">storeHost</stringProp>
-            <stringProp name="Argument.value">localhost</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="storePort" elementType="Argument">
-            <stringProp name="Argument.name">storePort</stringProp>
-            <stringProp name="Argument.value">9443</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="gwMgrHost" elementType="Argument">
-            <stringProp name="Argument.name">gwMgrHost</stringProp>
-            <stringProp name="Argument.value">localhost</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="gwMgrPort" elementType="Argument">
-            <stringProp name="Argument.name">gwMgrPort</stringProp>
-            <stringProp name="Argument.value">9443</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="gwWrkHost" elementType="Argument">
-            <stringProp name="Argument.name">gwWrkHost</stringProp>
-            <stringProp name="Argument.value">localhost</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="gwWrkPort" elementType="Argument">
-            <stringProp name="Argument.name">gwWrkPort</stringProp>
-            <stringProp name="Argument.value">9443</stringProp>
+          <elementProp name="amPort" elementType="Argument">
+            <stringProp name="Argument.name">amPort</stringProp>
+            <stringProp name="Argument.value">${__property(apimPort)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="nioPort" elementType="Argument">
             <stringProp name="Argument.name">nioPort</stringProp>
-            <stringProp name="Argument.value">8243</stringProp>
+            <stringProp name="Argument.value">${__property(nioPort)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="host" elementType="Argument">
+            <stringProp name="Argument.name">host</stringProp>
+            <stringProp name="Argument.value">${__property(apimHost)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -156,7 +117,7 @@
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
                   <stringProp name="Argument.value">{&#xd;
-    &quot;callbackUrl&quot;: &quot;localhost&quot;,&#xd;
+    &quot;callbackUrl&quot;: &quot;192.168.48.85&quot;,&#xd;
     &quot;clientName&quot;: &quot;${clientName}&quot;,&#xd;
     &quot;tokenScope&quot;: &quot;Production&quot;,&#xd;
     &quot;owner&quot;: &quot;${owner}&quot;,&#xd;
@@ -167,8 +128,8 @@
                 </elementProp>
               </collectionProp>
             </elementProp>
-            <stringProp name="HTTPSampler.domain">${pubHost}</stringProp>
-            <stringProp name="HTTPSampler.port">${pubPort}</stringProp>
+            <stringProp name="HTTPSampler.domain">${host}</stringProp>
+            <stringProp name="HTTPSampler.port">${amPort}</stringProp>
             <stringProp name="HTTPSampler.protocol">https</stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
             <stringProp name="HTTPSampler.path">/client-registration/v0.11/register</stringProp>
@@ -233,7 +194,7 @@ ${__setProperty(clientSecret, ${clientSecret})};</stringProp>
                 </elementProp>
               </collectionProp>
             </elementProp>
-            <stringProp name="HTTPSampler.domain">${gwMgrHost}</stringProp>
+            <stringProp name="HTTPSampler.domain">${host}</stringProp>
             <stringProp name="HTTPSampler.port">${nioPort}</stringProp>
             <stringProp name="HTTPSampler.protocol">https</stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
@@ -301,17 +262,6 @@ byte[] b64encrypted = Base64.encodeBase64(concatValue.getBytes());
             <hashTree/>
           </hashTree>
         </hashTree>
-        <ThroughputController guiclass="ThroughputControllerGui" testclass="ThroughputController" testname="Throughput Controller" enabled="true">
-          <intProp name="ThroughputController.style">1</intProp>
-          <boolProp name="ThroughputController.perThread">false</boolProp>
-          <intProp name="ThroughputController.maxThroughput">1</intProp>
-          <FloatProperty>
-            <name>ThroughputController.percentThroughput</name>
-            <value>1.0</value>
-            <savedValue>0.0</savedValue>
-          </FloatProperty>
-        </ThroughputController>
-        <hashTree/>
       </hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="API Creation" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
@@ -345,8 +295,8 @@ byte[] b64encrypted = Base64.encodeBase64(concatValue.getBytes());
           <hashTree/>
           <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="ep_port Counter" enabled="true">
             <stringProp name="CounterConfig.start">9001</stringProp>
-            <stringProp name="CounterConfig.end">20</stringProp>
-            <stringProp name="CounterConfig.incr">1</stringProp>
+            <stringProp name="CounterConfig.end"></stringProp>
+            <stringProp name="CounterConfig.incr">0001</stringProp>
             <stringProp name="CounterConfig.name">ep_port</stringProp>
             <stringProp name="CounterConfig.format"></stringProp>
             <boolProp name="CounterConfig.per_user">false</boolProp>
@@ -392,7 +342,7 @@ byte[] b64encrypted = Base64.encodeBase64(concatValue.getBytes());
                 </elementProp>
               </collectionProp>
             </elementProp>
-            <stringProp name="HTTPSampler.domain">${gwMgrHost}</stringProp>
+            <stringProp name="HTTPSampler.domain">${host}</stringProp>
             <stringProp name="HTTPSampler.port">${nioPort}</stringProp>
             <stringProp name="HTTPSampler.protocol">https</stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
@@ -467,7 +417,7 @@ byte[] b64encrypted = Base64.encodeBase64(concatValue.getBytes());
    },&#xd;
    &quot;visibility&quot;: &quot;PUBLIC&quot;,&#xd;
    &quot;visibleRoles&quot;: [],&#xd;
-   &quot;endpointConfig&quot;: &quot;{\&quot;production_endpoints\&quot;:{\&quot;url\&quot;:\&quot;http://localhost:900${counter}/service/\&quot;,\&quot;config\&quot;:null},\&quot;sandbox_endpoints\&quot;:{\&quot;url\&quot;:\&quot;http://localhost:900${counter}/service/\&quot;,\&quot;config\&quot;:null},\&quot;endpoint_type\&quot;:\&quot;http\&quot;}&quot;,&#xd;
+   &quot;endpointConfig&quot;: &quot;{\&quot;production_endpoints\&quot;:{\&quot;url\&quot;:\&quot;http://192.168.48.85:${ep_port}/service/\&quot;,\&quot;config\&quot;:null},\&quot;sandbox_endpoints\&quot;:{\&quot;url\&quot;:\&quot;http://192.168.48.85:${ep_port}/service/\&quot;,\&quot;config\&quot;:null},\&quot;endpoint_type\&quot;:\&quot;http\&quot;}&quot;,&#xd;
    &quot;gatewayEnvironments&quot;: &quot;Production and Sandbox&quot;,&#xd;
       &quot;subscriptionAvailability&quot;: null,&#xd;
    &quot;subscriptionAvailableTenants&quot;: [],&#xd;
@@ -483,8 +433,8 @@ byte[] b64encrypted = Base64.encodeBase64(concatValue.getBytes());
                 </elementProp>
               </collectionProp>
             </elementProp>
-            <stringProp name="HTTPSampler.domain">${pubHost}</stringProp>
-            <stringProp name="HTTPSampler.port">${pubPort}</stringProp>
+            <stringProp name="HTTPSampler.domain">${host}</stringProp>
+            <stringProp name="HTTPSampler.port">${amPort}</stringProp>
             <stringProp name="HTTPSampler.protocol">https</stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
             <stringProp name="HTTPSampler.path">/api/am/publisher/v0.11/apis</stringProp>
@@ -578,7 +528,7 @@ ${__setProperty(api_3, ${api3})};
                 </elementProp>
               </collectionProp>
             </elementProp>
-            <stringProp name="HTTPSampler.domain">${gwMgrHost}</stringProp>
+            <stringProp name="HTTPSampler.domain">${host}</stringProp>
             <stringProp name="HTTPSampler.port">${nioPort}</stringProp>
             <stringProp name="HTTPSampler.protocol">https</stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
@@ -626,8 +576,8 @@ ${__setProperty(api_3, ${api3})};
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
-            <stringProp name="HTTPSampler.domain">${pubHost}</stringProp>
-            <stringProp name="HTTPSampler.port">${pubPort}</stringProp>
+            <stringProp name="HTTPSampler.domain">${host}</stringProp>
+            <stringProp name="HTTPSampler.port">${amPort}</stringProp>
             <stringProp name="HTTPSampler.protocol">https</stringProp>
             <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
             <stringProp name="HTTPSampler.path">/api/am/publisher/v0.11/apis/change-lifecycle?apiId=${apid}&amp;action=Publish</stringProp>

@@ -4,7 +4,7 @@
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="API Governance - Application Level Throttling" enabled="true">
       <stringProp name="TestPlan.comments">Using Per quota-token </stringProp>
       <boolProp name="TestPlan.functional_mode">false</boolProp>
-      <boolProp name="TestPlan.serialize_threadgroups">true</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
       <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments"/>
       </elementProp>
@@ -63,16 +63,6 @@
             <stringProp name="Argument.value">${__property(owner)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="payload_medium" elementType="Argument">
-            <stringProp name="Argument.name">payload_medium</stringProp>
-            <stringProp name="Argument.value">${__property(payload_medium)}</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="tps" elementType="Argument">
-            <stringProp name="Argument.name">tps</stringProp>
-            <stringProp name="Argument.value">${__property(medium_tps)}</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
           <elementProp name="high_payloadPath" elementType="Argument">
             <stringProp name="Argument.name">high_payloadPath</stringProp>
             <stringProp name="Argument.value">${__property(high_payloadPath)}</stringProp>
@@ -86,6 +76,11 @@
           <elementProp name="low_payloadPath" elementType="Argument">
             <stringProp name="Argument.name">low_payloadPath</stringProp>
             <stringProp name="Argument.value">${__property(low_payloadPath)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="tps" elementType="Argument">
+            <stringProp name="Argument.name">tps</stringProp>
+            <stringProp name="Argument.value">${__property(medium_tps)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -121,7 +116,7 @@
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
                   <stringProp name="Argument.value">{&#xd;
-    &quot;callbackUrl&quot;: &quot;localhost&quot;,&#xd;
+    &quot;callbackUrl&quot;: &quot;192.168.48.85&quot;,&#xd;
     &quot;clientName&quot;: &quot;${clientName}&quot;,&#xd;
     &quot;tokenScope&quot;: &quot;Production&quot;,&#xd;
     &quot;owner&quot;: &quot;${owner}&quot;,&#xd;
@@ -389,7 +384,7 @@ vars.put(&quot;throttlingTier&quot;, tier);</stringProp>
           </hashTree>
           <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Add Subscriptions" enabled="true">
             <boolProp name="LoopController.continue_forever">true</boolProp>
-            <stringProp name="LoopController.loops">5</stringProp>
+            <stringProp name="LoopController.loops">20</stringProp>
           </LoopController>
           <hashTree>
             <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
@@ -652,8 +647,12 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </hashTree>
           </hashTree>
         </hashTree>
+        <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="false">
+          <stringProp name="ConstantTimer.delay">10000</stringProp>
+        </ConstantTimer>
+        <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Invoke API with Low Payload" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Invoke API with Low Payload" enabled="true">
         <stringProp name="TestPlan.comments">Invoke from App1</stringProp>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
@@ -666,7 +665,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
         <longProp name="ThreadGroup.end_time">1526469841000</longProp>
         <boolProp name="ThreadGroup.scheduler">true</boolProp>
         <stringProp name="ThreadGroup.duration">21600</stringProp>
-        <stringProp name="ThreadGroup.delay">34800</stringProp>
+        <stringProp name="ThreadGroup.delay">15</stringProp>
       </ThreadGroup>
       <hashTree>
         <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="InvokeAPI" enabled="true">
@@ -678,7 +677,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             <stringProp name="throughput">${tps}</stringProp>
           </ConstantThroughputTimer>
           <hashTree/>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API1" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API1 - Low Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${low_payloadPath}" elementType="HTTPFileArg">
@@ -734,7 +733,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API2" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API2 - Low Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${low_payloadPath}" elementType="HTTPFileArg">
@@ -790,7 +789,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API3" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API3 - Low Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${low_payloadPath}" elementType="HTTPFileArg">
@@ -846,7 +845,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API4" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API4 - Low Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${low_payloadPath}" elementType="HTTPFileArg">
@@ -902,7 +901,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API5" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API5 - Low Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${low_payloadPath}" elementType="HTTPFileArg">
@@ -958,7 +957,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API6" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API6 - Low Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${low_payloadPath}" elementType="HTTPFileArg">
@@ -1014,7 +1013,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API7" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API7 - Low Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${low_payloadPath}" elementType="HTTPFileArg">
@@ -1070,7 +1069,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API8" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API8 - Low Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${low_payloadPath}" elementType="HTTPFileArg">
@@ -1126,7 +1125,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API9" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API9 - Low Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${low_payloadPath}" elementType="HTTPFileArg">
@@ -1182,7 +1181,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API10" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API10 - Low Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${low_payloadPath}" elementType="HTTPFileArg">
@@ -1238,7 +1237,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API11" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API11 - Low Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${low_payloadPath}" elementType="HTTPFileArg">
@@ -1294,7 +1293,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API12" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API12 - Low Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${low_payloadPath}" elementType="HTTPFileArg">
@@ -1350,7 +1349,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API13" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API13 - Low Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${low_payloadPath}" elementType="HTTPFileArg">
@@ -1406,7 +1405,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API14" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API14 - Low Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${low_payloadPath}" elementType="HTTPFileArg">
@@ -1462,7 +1461,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API15" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API15 - Low Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${low_payloadPath}" elementType="HTTPFileArg">
@@ -1518,7 +1517,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API16" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API16 - Low Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${low_payloadPath}" elementType="HTTPFileArg">
@@ -1574,7 +1573,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API17" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API17 - Low Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${low_payloadPath}" elementType="HTTPFileArg">
@@ -1630,7 +1629,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API18" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API18 - Low Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${low_payloadPath}" elementType="HTTPFileArg">
@@ -1686,7 +1685,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API19" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API19 - Low Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${low_payloadPath}" elementType="HTTPFileArg">
@@ -1742,7 +1741,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API20" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API20 - Low Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${low_payloadPath}" elementType="HTTPFileArg">
@@ -1812,8 +1811,8 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
         <longProp name="ThreadGroup.start_time">1526618967000</longProp>
         <longProp name="ThreadGroup.end_time">1526619027000</longProp>
         <boolProp name="ThreadGroup.scheduler">true</boolProp>
-        <stringProp name="ThreadGroup.duration">34200</stringProp>
-        <stringProp name="ThreadGroup.delay">35100</stringProp>
+        <stringProp name="ThreadGroup.duration">21600</stringProp>
+        <stringProp name="ThreadGroup.delay">15</stringProp>
       </ThreadGroup>
       <hashTree>
         <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="InvokeAPI" enabled="true">
@@ -2947,7 +2946,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Invoke API with High Payload" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Invoke API with High Payload" enabled="true">
         <stringProp name="TestPlan.comments">Invoke from App1</stringProp>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
@@ -2959,8 +2958,8 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
         <longProp name="ThreadGroup.start_time">1526467707000</longProp>
         <longProp name="ThreadGroup.end_time">1526469841000</longProp>
         <boolProp name="ThreadGroup.scheduler">true</boolProp>
-        <stringProp name="ThreadGroup.duration">34200</stringProp>
-        <stringProp name="ThreadGroup.delay">35100</stringProp>
+        <stringProp name="ThreadGroup.duration">21600</stringProp>
+        <stringProp name="ThreadGroup.delay">15</stringProp>
       </ThreadGroup>
       <hashTree>
         <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="InvokeAPI" enabled="true">
@@ -2972,7 +2971,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             <stringProp name="throughput">${tps}</stringProp>
           </ConstantThroughputTimer>
           <hashTree/>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API1" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API1 - High Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${high_payloadPath}" elementType="HTTPFileArg">
@@ -3028,7 +3027,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API2" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API2 - High Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${high_payloadPath}" elementType="HTTPFileArg">
@@ -3084,7 +3083,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API3" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API3 - High Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${high_payloadPath}" elementType="HTTPFileArg">
@@ -3110,7 +3109,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
             <stringProp name="HTTPSampler.connect_timeout"></stringProp>
             <stringProp name="HTTPSampler.response_timeout"></stringProp>
-            <stringProp name="TestPlan.comments">Invoking create API1</stringProp>
+            <stringProp name="TestPlan.comments">Invoking create API3</stringProp>
           </HTTPSamplerProxy>
           <hashTree>
             <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
@@ -3140,7 +3139,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API4" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API4 - High Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${high_payloadPath}" elementType="HTTPFileArg">
@@ -3166,7 +3165,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
             <stringProp name="HTTPSampler.connect_timeout"></stringProp>
             <stringProp name="HTTPSampler.response_timeout"></stringProp>
-            <stringProp name="TestPlan.comments">Invoking create API1</stringProp>
+            <stringProp name="TestPlan.comments">Invoking create API4</stringProp>
           </HTTPSamplerProxy>
           <hashTree>
             <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
@@ -3196,7 +3195,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API5" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API5 - High Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${high_payloadPath}" elementType="HTTPFileArg">
@@ -3222,7 +3221,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
             <stringProp name="HTTPSampler.connect_timeout"></stringProp>
             <stringProp name="HTTPSampler.response_timeout"></stringProp>
-            <stringProp name="TestPlan.comments">Invoking create API1</stringProp>
+            <stringProp name="TestPlan.comments">Invoking create API5</stringProp>
           </HTTPSamplerProxy>
           <hashTree>
             <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
@@ -3252,7 +3251,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API6" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API6 - High Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${high_payloadPath}" elementType="HTTPFileArg">
@@ -3278,7 +3277,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
             <stringProp name="HTTPSampler.connect_timeout"></stringProp>
             <stringProp name="HTTPSampler.response_timeout"></stringProp>
-            <stringProp name="TestPlan.comments">Invoking create API1</stringProp>
+            <stringProp name="TestPlan.comments">Invoking create API6</stringProp>
           </HTTPSamplerProxy>
           <hashTree>
             <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
@@ -3308,7 +3307,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API7" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API7 - High Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${high_payloadPath}" elementType="HTTPFileArg">
@@ -3334,7 +3333,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
             <stringProp name="HTTPSampler.connect_timeout"></stringProp>
             <stringProp name="HTTPSampler.response_timeout"></stringProp>
-            <stringProp name="TestPlan.comments">Invoking create API1</stringProp>
+            <stringProp name="TestPlan.comments">Invoking create API7</stringProp>
           </HTTPSamplerProxy>
           <hashTree>
             <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
@@ -3364,7 +3363,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API8" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API8 - High Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${high_payloadPath}" elementType="HTTPFileArg">
@@ -3390,7 +3389,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
             <stringProp name="HTTPSampler.connect_timeout"></stringProp>
             <stringProp name="HTTPSampler.response_timeout"></stringProp>
-            <stringProp name="TestPlan.comments">Invoking create API1</stringProp>
+            <stringProp name="TestPlan.comments">Invoking create API8</stringProp>
           </HTTPSamplerProxy>
           <hashTree>
             <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
@@ -3420,7 +3419,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API9" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API9 - High Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${high_payloadPath}" elementType="HTTPFileArg">
@@ -3476,7 +3475,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API10" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API10 - High Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${high_payloadPath}" elementType="HTTPFileArg">
@@ -3532,7 +3531,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API11" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API11 - High Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${high_payloadPath}" elementType="HTTPFileArg">
@@ -3588,7 +3587,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API12" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API12 - High Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${high_payloadPath}" elementType="HTTPFileArg">
@@ -3644,7 +3643,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API13" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API13 - High Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${high_payloadPath}" elementType="HTTPFileArg">
@@ -3700,7 +3699,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API14" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API14 - High Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${high_payloadPath}" elementType="HTTPFileArg">
@@ -3756,7 +3755,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API15" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API15 - High Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${high_payloadPath}" elementType="HTTPFileArg">
@@ -3812,7 +3811,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API16" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API16 - High Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${high_payloadPath}" elementType="HTTPFileArg">
@@ -3868,7 +3867,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API17" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API17 - High Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${high_payloadPath}" elementType="HTTPFileArg">
@@ -3924,7 +3923,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API18" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API18 - High Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${high_payloadPath}" elementType="HTTPFileArg">
@@ -3980,7 +3979,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API19" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API19 - High Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${high_payloadPath}" elementType="HTTPFileArg">
@@ -4036,7 +4035,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API20" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="invoke API20 - High Payload " enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${high_payloadPath}" elementType="HTTPFileArg">
@@ -4104,9 +4103,9 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <longProp name="ThreadGroup.start_time">1515654841000</longProp>
         <longProp name="ThreadGroup.end_time">1515654841000</longProp>
-        <boolProp name="ThreadGroup.scheduler">false</boolProp>
-        <stringProp name="ThreadGroup.duration"></stringProp>
-        <stringProp name="ThreadGroup.delay"></stringProp>
+        <boolProp name="ThreadGroup.scheduler">true</boolProp>
+        <stringProp name="ThreadGroup.duration">10</stringProp>
+        <stringProp name="ThreadGroup.delay">21700</stringProp>
       </ThreadGroup>
       <hashTree>
         <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="RemoveApplications" enabled="true">
@@ -4251,7 +4250,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             <connectTime>true</connectTime>
           </value>
         </objProp>
-        <stringProp name="filename">/home/maneesha/dasproject/mayrepo/1/apim-loadtest/jmeter/das-LRTest-MediumTraffic6.jtl</stringProp>
+        <stringProp name="filename"></stringProp>
       </ResultCollector>
       <hashTree/>
       <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report" enabled="true">
@@ -4287,7 +4286,7 @@ vars.put(&quot;apiIdentifier&quot;, concateValue);</stringProp>
             <connectTime>true</connectTime>
           </value>
         </objProp>
-        <stringProp name="filename">/home/maneesha/dasproject/mayrepo/1/apim-loadtest/jmeter/das-LRTest-MediumTraffic3.jtl</stringProp>
+        <stringProp name="filename"></stringProp>
       </ResultCollector>
       <hashTree/>
     </hashTree>

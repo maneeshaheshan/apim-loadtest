@@ -15,26 +15,25 @@
 # limitations under the License.
 
 #create APIs
-{JMETER_HOME}/bin/jmeter -n -t {Path_To_Scrpting_HOME}/jmeter/API_Creation.jmx -p {Path_To_Scrpting_HOME}/resources/api-creationuser.properties -l {Path_To_Scrpting_HOME}/das-LRTest-API Creation.jtl
+#/home/ubuntu/apache-jmeter-3.2/bin/jmeter.sh -n -t /home/ubuntu/apim-loadtest/jmeter/API_Creation.jmx -p /home/ubuntu/apim-loadtest/resources/api-creationuser.properties -l /home/ubuntu/apim-loadtest/das-LRTest-APICreation.jtl
 
 #run high-traffic-jmeter_script
 
 crontab -l > mycron
-sudo echo "15 8 * * * /home/maneesha/dasproject/Scripts/high_traffic_Invocation.sh" >> mycron
+sudo echo "30 20 * * * /home/ubuntu/apache-jmeter-3.2/bin/jmeter.sh -n -t /home/ubuntu/apim-loadtest/jmeter/high_traffic_Invocation.jmx -p /home/ubuntu/apim-loadtest/resources/high-traffic-user.properties -l /home/ubuntu/apim-loadtest/jmeter/das-LRTest-HighTraffic.jtl" >> mycron
 crontab mycron
 rm mycron
 
 #run medium-traffic-jmeter_script
 crontab -l > mycron
-sudo echo "15 8 * * * /home/maneesha/dasproject/Scripts/medium_traffic_Invocation.sh" >> mycron
+sudo echo "00 06 * * * /home/ubuntu/apache-jmeter-3.2/bin/jmeter.sh -n -t /home/ubuntu/apim-loadtest/jmeter/medium_traffic_Invocation.jmx -p /home/ubuntu/apim-loadtest/resources/medium-traffic-user.properties -l /home/ubuntu/apim-loadtest/jmeter/das-LRTest-MediumTraffic.jtl" >> mycron
 crontab mycron
 rm mycron
 
 #run low-traffic-jmeter_script
 crontab -l > mycron
-sudo echo "15 8 * * * /home/maneesha/dasproject/Scripts/low_traffic_Invocation.sh" >> mycron
+sudo echo "00 12 * * * /home/ubuntu/apache-jmeter-3.2/bin/jmeter.sh -n -t /home/ubuntu/apim-loadtest/jmeter/low_traffic_Invocation.jmx -p /home/ubuntu/apim-loadtest/resources/low-traffic-user.properties -l /home/ubuntu/apim-loadtest/jmeter/das-LRTest-LowTraffic.jtl" >> mycron
 crontab mycron
 rm mycron
-
 
 
