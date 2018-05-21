@@ -4,8 +4,9 @@
 This is to address API invocation with TPS and different payloads within different traffic periods.
 
 This solution covers the below areas
-* Create, Publish and subscribe to and API 
+* Create, Publish and subscribe to APIs 
 * Create MSF4J services to consume
+* Invoke APIs in different traffic intervals
 
 ### Pre-requists to execute tests
 1. Build each of MSF4J services by changing the port defined in apim-loadtest/apps/src/main/java/org/apim/lrtest/Application.java . Build it using **mvn clean install**
