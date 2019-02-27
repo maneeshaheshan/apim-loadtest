@@ -1,6 +1,6 @@
-#events-service
+# BackEnd for the Load Test with MSF4J
 
-##Description
-This is a ms4fj service and this provides two operations to collect and retrieve events which are published from apim-manager when an api Life-Cycle change is happened
+## Description
 
-This is used in scenario04.
+This is a ms4fj service and this provides an operation to output a sample text values as the response.
+This is used as backends for the created APIs.
